@@ -51,7 +51,8 @@ public class Main {
                     linesCount++;
                 }
             } catch(IOException ex) {
-                ex.printStackTrace();
+                System.out.println("IOException has been threw parsing file:");
+                System.out.println(fileName);
             }
         }
 
