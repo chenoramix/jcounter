@@ -3,6 +3,7 @@ import java.util.*;
 
 public class Main {
 
+    // recursively looks for file based on endsWith extension
     static void processDirectories(String pathToCheck, String endsWith, ArrayList<String> paths) {
         File currentDir = new File(pathToCheck);
         File[] listFiles = currentDir.listFiles();
@@ -39,8 +40,21 @@ public class Main {
             return;
         }
 
-        ArrayList<String> paths = new ArrayList<String>();
+        ArrayList<String> paths = new ArrayList<>();
         processDirectories(pathToCheck, endsWith, paths);
 
+        int linesCount = 0;
+
+        for(String fileName : paths) {
+            try(BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+                while(br.readLine() != null) {
+                    linesCount++;
+                }
+            } catch(IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        System.out.println("Counted lines: " + linesCount);
     }
 }
