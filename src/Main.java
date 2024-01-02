@@ -4,7 +4,22 @@ import java.util.*;
 public class Main {
 
     static void processDirectories(String pathToCheck, String endsWith, ArrayList<String> paths) {
-        paths.add("test");
+        File currentDir = new File(pathToCheck);
+        File[] listFiles = currentDir.listFiles();
+
+        if(listFiles == null) {
+            return;
+        }
+
+        for(File f : listFiles) {
+            if(f.isDirectory()) {
+                processDirectories(f.getPath(), endsWith, paths);
+            } else if(f.isFile()) {
+                if(f.getName().endsWith(endsWith)) {
+                    paths.add(f.getAbsoluteFile().toString());
+                }
+            }
+        }
     }
 
     public static void main(String[] args) {
@@ -27,8 +42,5 @@ public class Main {
         ArrayList<String> paths = new ArrayList<String>();
         processDirectories(pathToCheck, endsWith, paths);
 
-        for(int a = 0; a < paths.size(); a++) {
-            System.out.println(paths.get(a));
-        }
     }
 }
